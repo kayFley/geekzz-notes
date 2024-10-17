@@ -81,7 +81,7 @@ export default function Heroes() {
 					className='hidden object-contain dark:xl:block dark:hidden'
 				/>
 			</div>
-			<div className='absolute z-10 -rotate-12 left-64 top-[32rem]'>
+			<div className='absolute z-10 rotate-12 left-64 top-[32rem]'>
 				<Image
 					src='/graph.svg'
 					alt='Document'
