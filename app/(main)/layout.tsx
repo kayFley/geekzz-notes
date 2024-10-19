@@ -14,19 +14,19 @@ export default function MainLayout({
 
 	if (isLoading) {
 		return (
-			<div className='flex items-center justify-center h-full'>
+			<div className='flex items-center justify-center w-full h-full cursor-wait'>
 				<Image
 					src={'/loading.svg'}
 					alt='Loading'
-					width={256}
-					height={256}
+					width={328}
+					height={328}
 					className='dark:hidden'
 				/>
 				<Image
 					src={'/loading-dark.svg'}
 					alt='Loading'
-					width={256}
-					height={256}
+					width={328}
+					height={328}
 					className='hidden dark:block'
 				/>
 			</div>

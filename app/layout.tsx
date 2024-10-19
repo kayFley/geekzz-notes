@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import { Toaster } from 'sonner'
+
 import { ConvexClientProvider } from '@/components/providers/convex-provider'
 import { ThemeProvider } from '@/components/theme-provider'
 
@@ -27,6 +29,7 @@ export default function RootLayout({
 						disableTransitionOnChange
 						storageKey='geekzz-theme-2'
 					>
+						<Toaster position='bottom-center' />
 						{children}
 					</ThemeProvider>
 				</ConvexClientProvider>

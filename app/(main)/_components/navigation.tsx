@@ -1,5 +1,6 @@
 'use client'
 
+import { api } from '@/convex/_generated/api'
 import { ChevronsLeftIcon, MenuIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { ElementRef, useEffect, useRef, useState } from 'react'
@@ -7,9 +8,13 @@ import { useMediaQuery } from 'usehooks-ts'
 
 import { cn } from '@/lib/utils'
 
+import { useQuery } from 'convex/react'
+import { UserItem } from './user-item'
+
 export function Navigation() {
 	const pathname = usePathname()
 	const isMobile = useMediaQuery('(max-width: 768px)')
+	const documents = useQuery(api.documents.get)
 
 	const isResizingRef = useRef(false)
 	const sidebarRef = useRef<ElementRef<'aside'>>(null)
@@ -100,7 +105,7 @@ export function Navigation() {
 			<aside
 				ref={sidebarRef}
 				className={cn(
-					'relative z-[999] flex flex-col h-full overflow-y-auto group/sidebar w-60 bg-black/5 dark:bg-white/5',
+					'relative z-[9999] flex flex-col h-full overflow-y-auto group/sidebar w-60 bg-black/5 dark:bg-white/5',
 					isResetting && 'transition-all ease-in-out duration-300',
 					isMobile && 'w-0'
 				)}
@@ -116,10 +121,12 @@ export function Navigation() {
 					<ChevronsLeftIcon className='w-5 h-5 ' />
 				</div>
 				<div>
-					<p>Action items</p>
+					<UserItem />
 				</div>
 				<div className='mt-4'>
-					<p>Documents</p>
+					{documents?.map(document => (
+						<p key={document._id}>{document.title}</p>
+					))}
 				</div>
 				<div
 					onMouseDown={handleMouseDown}
@@ -130,7 +137,7 @@ export function Navigation() {
 			<div
 				ref={navbarRef}
 				className={cn(
-					'absolute top-0 z-[999] left-60 w-[calc(100%-240px)]',
+					'absolute top-0 z-[9999] left-60 w-[calc(100%-240px)]',
 					isResetting && 'transition-all ease-in-out duration-300',
 					isMobile && 'left-0 w-full'
 				)}
