@@ -1,5 +1,6 @@
 'use client'
 
+import { SearchCommand } from '@/components/search-command'
 import { useConvexAuth } from 'convex/react'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
@@ -40,7 +41,10 @@ export default function MainLayout({
 	return (
 		<div className='flex h-full'>
 			<Navigation />
-			<main className='flex-1 h-full overflow-y-auto'>{children}</main>
+			<main className='flex-1 h-full overflow-y-auto'>
+				<SearchCommand />
+				{children}
+			</main>
 		</div>
 	)
 }

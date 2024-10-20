@@ -19,6 +19,7 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover'
+import { useSearch } from '@/hooks/use-search'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { DocumentList } from './document-list'
@@ -27,6 +28,7 @@ import TrashBox from './trash-box'
 import { UserItem } from './user-item'
 
 export function Navigation() {
+	const search = useSearch()
 	const pathname = usePathname()
 	const isMobile = useMediaQuery('(max-width: 768px)')
 	const create = useMutation(api.documents.create)
@@ -151,7 +153,7 @@ export function Navigation() {
 						label='Поиск'
 						icon={SearchIcon}
 						isSearch
-						onClick={() => {}}
+						onClick={search.onOpen}
 					/>
 					<Item
 						label='Настройки'
