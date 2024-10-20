@@ -20,6 +20,7 @@ import {
 	PopoverTrigger,
 } from '@/components/ui/popover'
 import { useSearch } from '@/hooks/use-search'
+import { useSettings } from '@/hooks/use-settings'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { DocumentList } from './document-list'
@@ -28,6 +29,7 @@ import TrashBox from './trash-box'
 import { UserItem } from './user-item'
 
 export function Navigation() {
+	const settings = useSettings()
 	const search = useSearch()
 	const pathname = usePathname()
 	const isMobile = useMediaQuery('(max-width: 768px)')
@@ -158,7 +160,7 @@ export function Navigation() {
 					<Item
 						label='Настройки'
 						icon={SettingsIcon}
-						onClick={() => {}}
+						onClick={settings.onOpen}
 					/>
 					<Item
 						onClick={handleCreate}

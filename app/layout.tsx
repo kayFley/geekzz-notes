@@ -3,8 +3,9 @@ import type { Metadata } from 'next'
 import { Toaster } from 'sonner'
 
 import { ConvexClientProvider } from '@/components/providers/convex-provider'
-import { ThemeProvider } from '@/components/theme-provider'
 
+import { ModalProvider } from '@/components/providers/modal-provider'
+import { ThemeProvider } from '@/components/providers/theme-provider'
 import { inter } from './fonts'
 import './globals.css'
 
@@ -30,6 +31,7 @@ export default function RootLayout({
 						storageKey='geekzz-theme-2'
 					>
 						<Toaster position='bottom-center' />
+						<ModalProvider />
 						{children}
 					</ThemeProvider>
 				</ConvexClientProvider>

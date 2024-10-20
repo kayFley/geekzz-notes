@@ -1,6 +1,5 @@
 'use client'
 
-import { ModeToggle } from '@/components/mode-toggle'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
 	DropdownMenu,
@@ -64,7 +63,6 @@ export function UserItem() {
 							</p>
 						</div>
 					</div>
-					<ModeToggle />
 				</div>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem

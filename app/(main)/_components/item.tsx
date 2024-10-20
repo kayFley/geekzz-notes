@@ -60,9 +60,9 @@ export function Item({
 		const promise = archive({ id })
 
 		toast.promise(promise, {
-			loading: 'Удаление документа...',
-			success: 'Документ удален',
-			error: 'Не удалось удалить документ',
+			loading: 'Перемещение в корзину...',
+			success: 'Документ перемещен в корзину',
+			error: 'Не удалось переместить документ в корзину',
 		})
 	}
 
