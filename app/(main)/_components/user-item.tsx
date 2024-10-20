@@ -1,5 +1,6 @@
 'use client'
 
+import { ModeToggle } from '@/components/mode-toggle'
 import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
 	DropdownMenu,
@@ -43,10 +44,11 @@ export function UserItem() {
 				<div className='flex flex-col p-2 space-y-4'>
 					<p className='text-sm font-medium leading-none text-muted-foreground'>
 						{user?.emailAddresses[0].emailAddress
-							? `${user?.emailAddresses[0].emailAddress.slice(
-									0,
-									2
-								)}***@${user?.emailAddresses[0].emailAddress
+							? `${user?.emailAddresses[0].emailAddress.slice(0, 3)}***${user?.emailAddresses[0].emailAddress
+									.split('@')[0]
+									.slice(
+										-3
+									)}@${user?.emailAddresses[0].emailAddress
 									.split('@')
 									.pop()}`
 							: ''}
@@ -63,6 +65,7 @@ export function UserItem() {
 							</p>
 						</div>
 					</div>
+					<ModeToggle />
 				</div>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem

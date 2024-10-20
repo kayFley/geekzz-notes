@@ -20,14 +20,14 @@ export default function MainLayout({
 					alt='Loading'
 					width={328}
 					height={328}
-					className='dark:hidden'
+					className='dark:hidden animate-pulse'
 				/>
 				<Image
 					src={'/loading-dark.svg'}
 					alt='Loading'
 					width={328}
 					height={328}
-					className='hidden dark:block'
+					className='hidden dark:block animate-pulse'
 				/>
 			</div>
 		)

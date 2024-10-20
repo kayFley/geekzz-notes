@@ -1,20 +1,28 @@
 'use client'
 
 import { api } from '@/convex/_generated/api'
-import { ChevronsLeftIcon, MenuIcon } from 'lucide-react'
+import { useMutation, useQuery } from 'convex/react'
+import {
+	ChevronsLeftIcon,
+	MenuIcon,
+	PlusIcon,
+	SearchIcon,
+	SettingsIcon,
+} from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { ElementRef, useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 
 import { cn } from '@/lib/utils'
-
-import { useQuery } from 'convex/react'
+import { toast } from 'sonner'
+import { Item } from './item'
 import { UserItem } from './user-item'
 
 export function Navigation() {
 	const pathname = usePathname()
 	const isMobile = useMediaQuery('(max-width: 768px)')
 	const documents = useQuery(api.documents.get)
+	const create = useMutation(api.documents.create)
 
 	const isResizingRef = useRef(false)
 	const sidebarRef = useRef<ElementRef<'aside'>>(null)
@@ -100,6 +108,16 @@ export function Navigation() {
 		}
 	}
 
+	const handleCreate = () => {
+		const promise = create({ title: 'Новый документ' })
+
+		toast.promise(promise, {
+			loading: 'Создание документа...',
+			success: 'Документ создан',
+			error: 'Не удалось создать документ',
+		})
+	}
+
 	return (
 		<>
 			<aside
@@ -122,6 +140,22 @@ export function Navigation() {
 				</div>
 				<div>
 					<UserItem />
+					<Item
+						label='Поиск'
+						icon={SearchIcon}
+						isSearch
+						onClick={() => {}}
+					/>
+					<Item
+						label='Настройки'
+						icon={SettingsIcon}
+						onClick={() => {}}
+					/>
+					<Item
+						onClick={handleCreate}
+						label='Новый документ'
+						icon={PlusIcon}
+					/>
 				</div>
 				<div className='mt-4'>
 					{documents?.map(document => (

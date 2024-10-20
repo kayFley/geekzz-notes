@@ -27,14 +27,14 @@ export default function DocumentsPage() {
 	return (
 		<div className='flex flex-col items-center justify-center h-full space-y-4'>
 			<Image
-				src='empty.svg'
+				src='rocket.svg'
 				alt='Empty'
 				width={328}
 				height={328}
 				className='dark:hidden'
 			/>
 			<Image
-				src='empty-dark.svg'
+				src='rocket-dark.svg'
 				alt='Empty'
 				width={328}
 				height={328}
@@ -44,7 +44,7 @@ export default function DocumentsPage() {
 				Добро пожаловать в {user?.firstName} Geekzz
 			</h2>
 			<Button onClick={onCreate}>
-				<PlusIcon className='w-4 h-4 mr-2' />
+				<PlusIcon className='w-4 h-4' />
 				Создать документ
 			</Button>
 		</div>
