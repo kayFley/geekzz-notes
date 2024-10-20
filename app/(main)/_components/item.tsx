@@ -1,8 +1,14 @@
 'use client'
 
+import { Skeleton } from '@/components/ui/skeleton'
+import { api } from '@/convex/_generated/api'
 import { Id } from '@/convex/_generated/dataModel'
 import { cn } from '@/lib/utils'
-import { ChevronDown, ChevronUp, LucideIcon } from 'lucide-react'
+import { useMutation } from 'convex/react'
+import { ChevronDown, ChevronRight, LucideIcon, PlusIcon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import React from 'react'
+import { toast } from 'sonner'
 
 interface ItemProps {
 	id?: Id<'documents'>
@@ -29,7 +35,39 @@ export function Item({
 	onClick,
 	icon: Icon,
 }: ItemProps) {
-	const ChevronIcon = expanded ? ChevronDown : ChevronUp
+	const create = useMutation(api.documents.create)
+	const router = useRouter()
+
+	const handleExpand = (
+		event: React.MouseEvent<HTMLDivElement, MouseEvent>
+	) => {
+		event.stopPropagation()
+		onExpand?.()
+	}
+
+	const onCreate = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		event.stopPropagation()
+		if (!id) return
+
+		const promise = create({
+			title: 'Новый документ',
+			parentDocument: id,
+		}).then(documentId => {
+			if (!expanded) {
+				onExpand?.()
+			}
+
+			router.push(`/documents/${documentId}`)
+		})
+
+		toast.promise(promise, {
+			loading: 'Создание документа...',
+			success: 'Документ создан',
+			error: 'Не удалось создать документ',
+		})
+	}
+
+	const ChevronIcon = expanded ? ChevronDown : ChevronRight
 
 	return (
 		<div
@@ -45,7 +83,7 @@ export function Item({
 				<div
 					role='button'
 					className='h-full mr-1 rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600'
-					onClick={() => {}}
+					onClick={handleExpand}
 				>
 					<ChevronIcon className='w-4 h-4 shrink-0 text-muted-foreground/50' />
 				</div>
@@ -62,6 +100,29 @@ export function Item({
 					<span className='text-xs font-medium'>⌘</span>K
 				</kbd>
 			)}
+			{!!id && (
+				<div
+					role='button'
+					onClick={onCreate}
+					className='flex items-center ml-auto gap-x-2'
+				>
+					<div className='h-full ml-auto rounded-sm opacity-0 group-hover:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600'>
+						<PlusIcon className='w-4 h-4 text-muted-foreground' />
+					</div>
+				</div>
+			)}
+		</div>
+	)
+}
+
+Item.Skeleton = function ItemSkeleton({ level }: { level?: number }) {
+	return (
+		<div
+			className='flex py-1 gap-x-2'
+			style={{ paddingLeft: level ? `${level * 12 + 24}px` : '12px' }}
+		>
+			<Skeleton className='w-4 h-4' />
+			<Skeleton className='w-[30%] h-4' />
 		</div>
 	)
 }
