@@ -5,13 +5,12 @@ import { Avatar, AvatarImage } from '@/components/ui/avatar'
 import {
 	DropdownMenu,
 	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { SignOutButton, useUser } from '@clerk/nextjs'
-import {
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-} from '@radix-ui/react-dropdown-menu'
+
 import { ChevronsUpDownIcon } from 'lucide-react'
 
 export function UserItem() {
@@ -70,7 +69,7 @@ export function UserItem() {
 				<DropdownMenuSeparator />
 				<DropdownMenuItem
 					asChild
-					className='w-full transition duration-300 ease-in-out rounded-sm cursor-pointer text-muted-foreground hover:bg-black/5 dark:hover:bg-white/5 hover:outline-none'
+					className='w-full cursor-pointer text-muted-foreground'
 				>
 					<SignOutButton>Выход</SignOutButton>
 				</DropdownMenuItem>

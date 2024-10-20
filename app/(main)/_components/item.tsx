@@ -1,11 +1,26 @@
 'use client'
 
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import { Skeleton } from '@/components/ui/skeleton'
 import { api } from '@/convex/_generated/api'
 import { Id } from '@/convex/_generated/dataModel'
 import { cn } from '@/lib/utils'
+import { useUser } from '@clerk/nextjs'
 import { useMutation } from 'convex/react'
-import { ChevronDown, ChevronRight, LucideIcon, PlusIcon } from 'lucide-react'
+import {
+	ChevronDown,
+	ChevronRight,
+	LucideIcon,
+	MoreHorizontalIcon,
+	PlusIcon,
+	TrashIcon,
+} from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'sonner'
@@ -36,7 +51,22 @@ export function Item({
 	icon: Icon,
 }: ItemProps) {
 	const create = useMutation(api.documents.create)
+	const archive = useMutation(api.documents.archive)
 	const router = useRouter()
+
+	const onArchive = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		event.stopPropagation()
+		if (!id) return
+		const promise = archive({ id })
+
+		toast.promise(promise, {
+			loading: 'Удаление документа...',
+			success: 'Документ удален',
+			error: 'Не удалось удалить документ',
+		})
+	}
+
+	const { user } = useUser()
 
 	const handleExpand = (
 		event: React.MouseEvent<HTMLDivElement, MouseEvent>
@@ -101,12 +131,37 @@ export function Item({
 				</kbd>
 			)}
 			{!!id && (
-				<div
-					role='button'
-					onClick={onCreate}
-					className='flex items-center ml-auto gap-x-2'
-				>
-					<div className='h-full ml-auto rounded-sm opacity-0 group-hover:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600'>
+				<div className='flex items-center ml-auto gap-x-2'>
+					<DropdownMenu>
+						<DropdownMenuTrigger onClick={e => e.stopPropagation()}>
+							<div
+								role='button'
+								className='h-full ml-auto rounded-sm opacity-0 group-hover:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600'
+							>
+								<MoreHorizontalIcon className='w-4 h-4 text-muted-foreground' />
+							</div>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent
+							className='w-60'
+							align='start'
+							side='right'
+							forceMount
+						>
+							<DropdownMenuItem onClick={onArchive}>
+								<TrashIcon className='w-4 h-4' />
+								Удалить
+							</DropdownMenuItem>
+							<DropdownMenuSeparator />
+							<div className='p-2 text-xs text-muted-foreground'>
+								Последнее изменение: {user?.fullName}
+							</div>
+						</DropdownMenuContent>
+					</DropdownMenu>
+					<div
+						role='button'
+						onClick={onCreate}
+						className='h-full ml-auto rounded-sm opacity-0 group-hover:opacity-100 hover:bg-neutral-300 dark:hover:bg-neutral-600'
+					>
 						<PlusIcon className='w-4 h-4 text-muted-foreground' />
 					</div>
 				</div>
