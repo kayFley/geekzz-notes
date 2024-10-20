@@ -8,15 +8,22 @@ import {
 	PlusIcon,
 	SearchIcon,
 	SettingsIcon,
+	TrashIcon,
 } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { ElementRef, useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { DocumentList } from './document-list'
 import { Item } from './item'
+import TrashBox from './trash-box'
 import { UserItem } from './user-item'
 
 export function Navigation() {
@@ -159,6 +166,22 @@ export function Navigation() {
 				</div>
 				<div className='mt-4'>
 					<DocumentList />
+					<Item
+						onClick={handleCreate}
+						icon={PlusIcon}
+						label='Добавить документ'
+					/>
+					<Popover>
+						<PopoverTrigger className='w-full mt-4'>
+							<Item label='Корзина' icon={TrashIcon} />
+						</PopoverTrigger>
+						<PopoverContent
+							className='p-0 w-72'
+							side={isMobile ? 'bottom' : 'right'}
+						>
+							<TrashBox />
+						</PopoverContent>
+					</Popover>
 				</div>
 				<div
 					onMouseDown={handleMouseDown}
