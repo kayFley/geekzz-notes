@@ -5,6 +5,7 @@ import { useMutation } from 'convex/react'
 import {
 	ChevronsLeftIcon,
 	MenuIcon,
+	PlusCircleIcon,
 	PlusIcon,
 	SearchIcon,
 	SettingsIcon,
@@ -167,7 +168,7 @@ export function Navigation() {
 					<Item
 						onClick={handleCreate}
 						label='Новый документ'
-						icon={PlusIcon}
+						icon={PlusCircleIcon}
 					/>
 				</div>
 				<div className='mt-4'>
