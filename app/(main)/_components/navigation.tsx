@@ -10,7 +10,7 @@ import {
 	SettingsIcon,
 	TrashIcon,
 } from 'lucide-react'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { ElementRef, useEffect, useRef, useState } from 'react'
 import { useMediaQuery } from 'usehooks-ts'
 
@@ -25,10 +25,12 @@ import { cn } from '@/lib/utils'
 import { toast } from 'sonner'
 import { DocumentList } from './document-list'
 import { Item } from './item'
+import { Navbar } from './navbar'
 import TrashBox from './trash-box'
 import { UserItem } from './user-item'
 
 export function Navigation() {
+	const params = useParams()
 	const settings = useSettings()
 	const search = useSearch()
 	const pathname = usePathname()
@@ -201,14 +203,21 @@ export function Navigation() {
 					isMobile && 'left-0 w-full'
 				)}
 			>
-				<nav className='w-full px-3 py-2 bg-transparent'>
-					{isCollapsed && (
-						<MenuIcon
-							onClick={resetWidth}
-							className='w-5 h-5 transition rounded-sm cursor-pointer text-muted-foreground hover:bg-neutral-200 dark:hover:bg-neutral-700'
-						/>
-					)}
-				</nav>
+				{!!params.documentId ? (
+					<Navbar
+						isCollapsed={isCollapsed}
+						onResetWidth={resetWidth}
+					/>
+				) : (
+					<nav className='w-full px-3 py-2 bg-transparent'>
+						{isCollapsed && (
+							<MenuIcon
+								onClick={resetWidth}
+								className='w-5 h-5 transition rounded-sm cursor-pointer text-muted-foreground hover:bg-neutral-200 dark:hover:bg-neutral-700'
+							/>
+						)}
+					</nav>
+				)}
 			</div>
 		</>
 	)
