@@ -2,6 +2,7 @@
 
 import { api } from '@/convex/_generated/api'
 import { Doc } from '@/convex/_generated/dataModel'
+import { useCoverImage } from '@/hooks/use-cover-image'
 import { useMutation } from 'convex/react'
 import { ImagePlusIcon, SmilePlusIcon, XIcon } from 'lucide-react'
 import { ElementRef, useRef, useState } from 'react'
@@ -21,6 +22,8 @@ export function Toolbar({ initialData, preview }: ToolbarProps) {
 
 	const update = useMutation(api.documents.update)
 	const removeIcon = useMutation(api.documents.removeIcon)
+
+	const coverImage = useCoverImage()
 
 	const enableInput = () => {
 		if (preview) return
@@ -102,7 +105,7 @@ export function Toolbar({ initialData, preview }: ToolbarProps) {
 						className='text-xs text-muted-foreground'
 						variant='outline'
 						size='sm'
-						onClick={() => {}}
+						onClick={coverImage.onOpen}
 					>
 						<ImagePlusIcon className='w-4 h-4 ' />
 						Добавить обложку
